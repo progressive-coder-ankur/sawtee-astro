@@ -1,0 +1,23 @@
+---
+import { getAllPagesWithSlugs, getPageBySlug } from "../lib/api";
+
+export async function getStaticPaths() {
+  const pagesWithSlugs = await getAllPagesWithSlugs();
+  return pagesWithSlugs.edges.map(({node}: {node: {slug: string}}) => {
+    return {
+      params: { slug: node.slug },
+    }
+  })
+}
+
+const { slug } = Astro.params;
+const page = await getPageBySlug(slug);
+
+export interface Props {
+
+}
+---
+
+<html>
+  <h1>Page template</h1>
+</html>
